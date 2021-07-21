@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { Router } from '@angular/router';
 import { PlatformDetectorService } from './../../core/platform-detector/platform-detector.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   templateUrl: './signin.component.html'
