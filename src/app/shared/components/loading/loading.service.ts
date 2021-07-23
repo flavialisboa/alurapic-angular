@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { LoadingType } from './loading-type';
+import { Subject } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+//iniciar e parar o componente de loader
+@Injectable({ providedIn: 'root' })
+export class LoadingService {
+
+  loadingSubject = new Subject<LoadingType>();
+
+  getLoading() {
+    return this.loadingSubject
+    .asObservable()
+    .pipe(startWith(LoadingType.STOPPED));
+    //RXJS
+  }
+
+  start() {
+    this.loadingSubject.next(LoadingType.LOADING);
+  }
+
+  stop() {
+    this.loadingSubject.next(LoadingType.STOPPED);
+  }
+}

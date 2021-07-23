@@ -1,0 +1,14 @@
+<div [ngClass]="{ 'active-menu': isShown }">
+  <!--Aplica a classe active-menu apenas se a propriedade isShown for verdadeira-->
+  <div class="menu-bar">
+    <i
+      tabindex="0"
+      class="fa fa-window-close"
+      (keyup.space)="toggle()"
+      (click)="toggle()"
+    >
+    </i>
+    <ng-content></ng-content>
+  </div>
+  <div class="overlay" (click)="toggle()"></div>
+</div>

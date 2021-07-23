@@ -1,15 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { lowerCaseValidator } from 'src/app/shared/validators/lower-case.validator';
 import { UserNotTakenValidatorService } from './user-not-taken.validator.service';
 import { NewUser } from './new-user';
 import { SignUpService } from './signup.service';
-import { Router } from '@angular/router';
 import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
+import { userNamePassword } from './username-password.validator';
 
 @Component({
   templateUrl: './signup.component.html',
-  providers: [ UserNotTakenValidatorService ]
+  providers: [UserNotTakenValidatorService]
 })
 export class SignUpComponent implements OnInit {
   signupForm: FormGroup;
@@ -53,17 +55,17 @@ export class SignUpComponent implements OnInit {
           Validators.maxLength(14)
         ]
       ]
+    }, {
+      validator: userNamePassword
     });
 
-  }
-
-  ngAfterViewInit(): void {
-    if (this.platformDetectorService.isPlatformBrowser()) {
+    this.platformDetectorService.isPlatformBrowser() &&
       this.emailInput.nativeElement.focus();
-    }
-  }
+}
 
-  signup() {
+signup() {
+  if (this.signupForm.valid && !this.signupForm.pending) {
+
     const newUser = this.signupForm.getRawValue() as NewUser;
     this.signUpService
       .signup(newUser)
@@ -72,4 +74,6 @@ export class SignUpComponent implements OnInit {
         err => console.log(err)
       );
   }
+
+}
 }
