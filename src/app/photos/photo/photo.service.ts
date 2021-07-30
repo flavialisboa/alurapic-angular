@@ -19,6 +19,28 @@ export class PhotoService {
       .get<Photo[]>(API + '/' + userName + '/photos');
   }
 
+  async countTotalLikes(userName: string) {
+    const photos = await this.listFromUser(userName).toPromise();
+
+    let counter = 0;
+    for (let index = 0; index < photos.length; index++) {
+      const photo = photos[index];
+      counter += photo.likes;
+    }
+    return counter;
+  }
+
+  async countTotalComments(userName: string) {
+    const photos = await this.listFromUser(userName).toPromise();
+
+    let counter = 0;
+    for (let index = 0; index < photos.length; index++) {
+      const photo = photos[index];
+      counter += photo.comments;
+    }
+    return counter;
+  }
+
   listFromUserPaginated(userName: string, page: number) {
     const params = new HttpParams()
       .append('page', page.toString());
@@ -61,7 +83,6 @@ export class PhotoService {
       API + '/photos/' + photoId + '/comments',
       { commentText }
     );
-
   }
 
   removePhoto(photoId: number) {

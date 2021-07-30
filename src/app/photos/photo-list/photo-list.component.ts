@@ -16,17 +16,24 @@ export class PhotoListComponent implements OnInit {
   hasMore: boolean = true;
   currentPage: number = 1;
   userName: string = '';
+  totalLike: number = 0;
+  totalComments: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private photoService: PhotoService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.activatedRoute.params.subscribe(params => {
       this.userName = params.userName;
       this.photos = this.activatedRoute.snapshot.data['photos'];
     });
+
+    this.totalLike = await this.photoService.countTotalLikes(this.userName);
+
+    this.totalComments = await this.photoService.countTotalComments(this.userName);
+
   }
 
   load() {

@@ -1,12 +1,17 @@
-<ap-search 
+<ap-search
     (onTyping)="filter = $event" [value]="filter">
 </ap-search>
 
-<ap-photos 
+<div class="text-center">
+  <p>Total de likes: {{ totalLike }}</p>
+  <p>Total de comentários: {{ totalComments }}</p>
+</div>
+
+<ap-photos
     [photos]="photos | filterByDescription: filter">
 </ap-photos>
 
-<ap-load-button 
-    (click)="load()" 
+<ap-load-button
+    (click)="load()"
     [hasMore]="hasMore">
 </ap-load-button>
